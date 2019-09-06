@@ -1,5 +1,5 @@
 pipeline {
-    agent {any}
+    agent any
     stages {
         stage('Checkout') {
             steps {
@@ -8,11 +8,12 @@ pipeline {
                        credentialsId: 'GitJerry',
                        branch: "master"
                     )
-                 script{
+                 script {
+                     def mvnHome = tool 'Maven 3.5.2'
                      def targetVersion = getDevVersion()
                      print 'target build version...'
                      print targetVersion
-                     sh "'mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                     sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
                      def pom = readMavenPom file: 'pom.xml'
                      // get the current development version
                      developmentArtifactVersion = "${pom.version}-${targetVersion}"

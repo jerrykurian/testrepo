@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+          docker {
+              image 'maven:3-alpine'
+              args '-v $HOME/.m2:/root/.m2'
+          }
+      }
     stages {
         stage('Checkout') {
             steps {
@@ -13,7 +18,7 @@ pipeline {
                      def targetVersion = getDevVersion()
                      print 'target build version...'
                      print targetVersion
-                     sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                     sh "'mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
                      def pom = readMavenPom file: 'pom.xml'
                      // get the current development version
                      developmentArtifactVersion = "${pom.version}-${targetVersion}"

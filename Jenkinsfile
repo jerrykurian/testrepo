@@ -8,8 +8,8 @@ pipeline {
                        credentialsId: 'GitJerry',
                        branch: "master"
                     )
-                  def mvnHome = tool 'Maven 3.6.2'
                   script {
+                      def mvnHome = tool 'Maven 3.6.2'
                      def targetVersion = getDevVersion()
                      print 'target build version...'
                      print targetVersion

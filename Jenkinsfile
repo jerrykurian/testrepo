@@ -2,9 +2,9 @@ pipeline {
     agent any
     stages {
         stage('One') {
+            def echoer = load "./jenkins/echoer.groovy"
             steps {
                 echo 'Loading external file'
-                def echoer = load "./jenkins/echoer.groovy"
                 echoer.echoIt('Hello World')
                 echo 'Loaded File and Called'
                 sh "echo Hello from the shell"

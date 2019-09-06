@@ -2,6 +2,7 @@ pipeline {
     agent any
     stages {
         stage('One') {
+            input message: 'Should we send a mail?', ok: 'Yes', parameters: [string(defaultValue: '', description: 'The name to send an email to ', name: 'Name', trim: false)]
             steps {
                 echo 'Loading external file'
                 script{
@@ -9,7 +10,6 @@ pipeline {
                     echoer.echoIt('Hello World')
                 }
                 echo 'Loaded File and Called'
-                input message: 'Should we send a mail?', ok: 'Yes', parameters: [string(defaultValue: '', description: 'The name to send an email to ', name: 'Name', trim: false)]
                  echo "Sending mail to ${Name}"
                 sh "echo Hello from the shell"
                 sh "hostname"

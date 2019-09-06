@@ -1,6 +1,16 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                git(
+                       url: 'https://github.com/jerrykurian/testrepo.git',
+                       credentialsId: 'GitJerry',
+                       branch: "master"
+                    )
+                 sh 'mvn install'
+            }
+        }
         stage('One') {
             steps {
                 echo 'Loading external file'
@@ -23,10 +33,4 @@ pipeline {
             }
         }
     }
-}
-def sendEmail(status) {
-    mail(
-            to: "$EMAIL_RECIPIENTS",
-            subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
-            body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
 }

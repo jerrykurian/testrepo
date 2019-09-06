@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('One') {
             input {
-                message "Should we send a mail?",
-                ok "Yes",
+                message "Should we send a mail?"
+                ok "Yes"
                 parameters {
                     string(defaultValue: '', description: 'The name to send an email to ', name: 'Name', trim: false)
                 }

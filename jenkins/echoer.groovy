@@ -1,4 +1,4 @@
 def echoIt(text){
-    echo text
+    echo "External file echo $text"
 }
 return this
